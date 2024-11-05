@@ -1,6 +1,6 @@
 package org.example.Util.csv;
 
-import co.edu.uniquindio.util.LectorArchivosUtil;
+import org.example.Util.LectorArchivosUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
