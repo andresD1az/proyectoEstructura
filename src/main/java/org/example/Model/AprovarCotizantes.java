@@ -70,6 +70,49 @@ public class AprovarCotizantes {
     }
     public static boolean procesoCotizanteCivil(Cotizante cotizante){
         boolean proceso=true;
+        if (cotizante.getUbicacionNacimiento().equals("Bogota")||
+                cotizante.getUbicacionNacimiento().equals("Medellin")||
+                cotizante.getUbicacionNacimiento().equals("Cali")||
+                cotizante.getUbicacionNacimiento().equals("..tan")||
+                cotizante.getUbicacionRecidencia().equals("Bogota")||
+                cotizante.getUbicacionRecidencia().equals("Medellin")||
+                cotizante.getUbicacionRecidencia().equals("Cali")||
+                cotizante.getUbicacionRecidencia().equals("..tan")
+        ){
+            proceso=false;
+        }else{
+            if (cotizante.getEdad() >= 35){
+                if (cotizante.getEmpresaPenciones().equals("Porvenir")){
+                    if (cotizante.getSemanasCotizadas() <800 ){
+                        proceso=true;
+                    }else {
+                        proceso=false;
+                    }
+                }else if (cotizante.getEmpresaPenciones().equals("proteccion")){
+                    if (cotizante.getSemanasCotizadas() <590 ){
+                        proceso=true;
+                    }else {
+                        proceso=false;
+                    }
+                }else if (cotizante.getEmpresaPenciones().equals("colfondos")){
+                    if (cotizante.getSemanasCotizadas() < 300){
+                        proceso=true;
+                    }else {
+                        proceso=false;
+                    }
+                }else if (cotizante.getEmpresaPenciones().equals("old mutual")){
+                    if (cotizante.getSemanasCotizadas() < 100){
+                        proceso=true;
+                    }else {
+                        proceso=false;
+                    }
+                }else {
+                    proceso=true;
+                }
+            }else {
+                proceso=false;
+            }
+        }
         return proceso;
     }
     public static CotizanteNegro buscarlolistaNegra(int cedula){
