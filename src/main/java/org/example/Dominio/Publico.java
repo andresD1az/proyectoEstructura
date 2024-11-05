@@ -12,11 +12,11 @@ public class Publico extends Cotizante{
         super();
     }
 
-    public Publico(String nombres, String apellidos, String ubicacionNacimiento, String ubicacionRecidencia, int edad, boolean funcionarioPublico, String trabajo, int numeroHijos, boolean embargado, boolean prepencionado, String empresaPenciones, double semanasCotizadas, boolean condecoraciones, String intitucionPublica, ArrayList<hijos> listahijos, boolean obserDisiplinaria) {
+    public Publico(String nombres, String apellidos, String ubicacionNacimiento, String ubicacionRecidencia, int edad, boolean funcionarioPublico, String trabajo, int numeroHijos, boolean embargado, boolean prepencionado, String empresaPenciones, double semanasCotizadas, boolean condecoraciones, String intitucionPublica, boolean obserDisiplinaria) {
         super();
         this.condecoraciones = condecoraciones;
         this.intitucionPublica = intitucionPublica;
-        this.listahijos = listahijos;
+        this.listahijos = null;
         this.obserDisiplinaria = obserDisiplinaria;
     }
 
@@ -36,19 +36,19 @@ public class Publico extends Cotizante{
         this.intitucionPublica = intitucionPublica;
     }
 
-    public ArrayList<hijos> getListahijos() {
-        return listahijos;
-    }
-
-    public void setListahijos(ArrayList<hijos> listahijos) {
-        this.listahijos = listahijos;
-    }
-
     public boolean isObserDisiplinaria() {
         return obserDisiplinaria;
     }
 
     public void setObserDisiplinaria(boolean obserDisiplinaria) {
         this.obserDisiplinaria = obserDisiplinaria;
+    }
+
+    public ArrayList<hijos> getListahijos() {
+        return listahijos;
+    }
+
+    public void setListahijos(ArrayList<hijos> listahijos) {
+        this.listahijos = listahijos;
     }
 }

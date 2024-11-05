@@ -3,6 +3,8 @@ package org.example.Model;
 import org.example.Dominio.Cotizante;
 import org.example.Dominio.CotizanteNegro;
 import org.example.Dominio.Publico;
+import org.example.Dominio.hijos;
+import org.example.Util.ListaEnlazada;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +32,40 @@ public class AprovarCotizantes {
 
     public static boolean procesoCotizantePublico(Publico cotizante){
         boolean proceso=true;
-
+            if(cotizante.getIntitucionPublica().equals("Armada")){
+                if (cotizante.isCondecoraciones()){
+                    return true;
+                }else {
+                    return procesoCotizanteCivil(cotizante);
+                }
+            }else if (cotizante.getIntitucionPublica().equals("Inpec")){
+                if (cotizante.getNumeroHijos() ==0){
+                    if (cotizante.isCondecoraciones()){
+                        return true;
+                    }else {
+                        return procesoCotizanteCivil(cotizante);
+                    }
+                }else {
+                    if (validacionHijos(cotizante.getTrabajo(), cotizante.getListahijos())){
+                        return true;
+                    }else {
+                        return procesoCotizanteCivil(cotizante);
+                    }
+                }
+            }else if (cotizante.getIntitucionPublica().equals("Policia")){
+                if (validacionHijos(cotizante.getTrabajo(), cotizante.getListahijos())){
+                    return true;
+                }else {
+                    return procesoCotizanteCivil(cotizante);
+                }
+            }else if (cotizante.getIntitucionPublica().equals("MinSalud") ||
+                    cotizante.getIntitucionPublica().equals("MinInterior")){
+                if (cotizante.isObserDisiplinaria()){
+                    //proceso de listado a la lista negra
+                }else{
+                    return true;
+                }
+            }
         return proceso;
     }
     public static boolean procesoCotizanteCivil(Cotizante cotizante){
@@ -46,6 +81,20 @@ public class AprovarCotizantes {
             }
         }
         return persona;
+    }
+    public static boolean validacionHijos(String cargo, ArrayList<hijos> listahijos){
+        boolean validacion=false;
+        for (hijos hijo:listahijos){
+            if (cargo.equals("Policia") && hijo.getEdad()>=18){
+                return true;
+            }else if (cargo.equals("Policia") && hijo.getEdad()<=18){
+                validacion=false;
+            }
+            if (cargo.equals(hijo.getTrabajo())){
+                return true;
+            }
+        }
+        return validacion;
     }
     public static boolean haPasadoMasDeSeisMeses(String fechaStr) {
         // Definir el formato de la fecha
