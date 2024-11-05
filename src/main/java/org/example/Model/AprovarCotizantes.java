@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class AprovarCotizantes {
 
-    public static void procesocotizante(Cotizante cotizante){
+    public boolean procesocotizante(Cotizante cotizante){
         ArrayList<CotizanteNegro> listanegra=new ArrayList<>();
         CotizanteNegro cotizanteNegro=buscarlolistaNegra(cotizante.getCedula());
         boolean centinela=true;
@@ -22,29 +22,20 @@ public class AprovarCotizantes {
                 centinela=false;
             }
         }
-        if (centinela){
-            if (cotizante.isFuncionarioPublico()){
-                procesoCotizantePublico(cotizante);
-            }
-            else{
-                procesoCotizanteCivil(cotizante);
-            }
-        }else {
-            //hacer el proceso cuando no son aprovado
+        if (cotizante.isPrepencionado()){
+            centinela=false;
         }
+        return centinela;
     }
 
-    public static boolean procesoCotizantePublico(Cotizante cotizante){
+    public static boolean procesoCotizantePublico(Publico cotizante){
         boolean proceso=true;
+
         return proceso;
     }
     public static boolean procesoCotizanteCivil(Cotizante cotizante){
         boolean proceso=true;
         return proceso;
-    }
-    public Cotizante cambioCotizantePublicoaCivil(Publico publico){
-        Cotizante persona=new Cotizante();
-        return persona;
     }
     public static CotizanteNegro buscarlolistaNegra(int cedula){
         ArrayList<CotizanteNegro> listanegra=new ArrayList<>();
