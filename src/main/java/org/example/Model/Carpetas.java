@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -24,8 +26,10 @@ public class Carpetas {
             return false;
         }
     }
-    public static boolean comprimirCarpeta(String fecha){
-        String nombreCarpeta= nombre+ fecha;
+
+    public static boolean comprimirCarpeta(){
+        String fechaFormateada = fechaanterior();
+        String nombreCarpeta = nombre + fechaFormateada;
         String carpetaARuta = ubicacion + nombreCarpeta;
         String archivoZipRuta = ubicacion + nombreCarpeta + ".zip";
 
@@ -78,5 +82,39 @@ public class Carpetas {
 
             fis.close();
             }
+    }
+    public static boolean eliminarCarpeta() {
+        String fechaFormateada = fechaanterior();
+        String nombreCarpeta = nombre + fechaFormateada;
+        File carpeta = new File(ubicacion + nombreCarpeta);
+        return eliminarCarpetaRecursiva(carpeta);
+    }
+
+    private static boolean eliminarCarpetaRecursiva(File carpeta) {
+        if (!carpeta.exists()) {
+            System.out.println("La carpeta no existe.");
+            return false;
+        }
+
+        if (carpeta.isDirectory()) {
+            File[] archivos = carpeta.listFiles();
+            if (archivos != null) {
+                for (File archivo : archivos) {
+                    eliminarCarpetaRecursiva(archivo);
+                }
+            }
+        }
+
+        return carpeta.delete();
+    }
+    public static String fechaanterior(){
+        // Obtener la fecha actual
+        LocalDate fechaActual = LocalDate.now();
+        // Restar un día para obtener la fecha del día anterior
+        LocalDate fechaDiaAnterior = fechaActual.minusDays(1);
+        // Formatear la fecha (opcional)
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy_MM_dd");
+        String fechaFormateada = fechaDiaAnterior.format(formato);
+        return fechaFormateada;
     }
 }

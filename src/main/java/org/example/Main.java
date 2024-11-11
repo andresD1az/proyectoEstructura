@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 public class Main {
     public static void main(String[] args) {
         System.out.println("nuevo aaa  Estructura project");
-        Carpetas.crearCarpeta();
         // Obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
 
@@ -16,9 +15,14 @@ public class Main {
         LocalDate fechaDiaAnterior = fechaActual.minusDays(1);
 
         // Formatear la fecha (opcional)
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy_MM_dd");
         String fechaFormateada = fechaDiaAnterior.format(formato);
 
         System.out.println("La fecha del día anterior es: " + fechaFormateada);
+        Carpetas carpetas = new Carpetas();
+        if (carpetas.comprimirCarpeta()){
+            System.out.println("El carpeta se ha comprimido");
+            carpetas.crearCarpeta();
+        }
     }
 }
