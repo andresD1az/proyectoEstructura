@@ -12,11 +12,10 @@ public class Publico extends Cotizante{
         super();
     }
 
-    public Publico(String nombres, String apellidos, String ubicacionNacimiento, String ubicacionRecidencia, int edad, boolean funcionarioPublico, String trabajo, int numeroHijos, boolean embargado, boolean prepencionado, String empresaPenciones, double semanasCotizadas, boolean condecoraciones, String intitucionPublica, boolean obserDisiplinaria) {
-        super();
+    public Publico(boolean condecoraciones, String intitucionPublica, ArrayList<hijos> listahijos, boolean obserDisiplinaria) {
         this.condecoraciones = condecoraciones;
         this.intitucionPublica = intitucionPublica;
-        this.listahijos = null;
+        this.listahijos = listahijos;
         this.obserDisiplinaria = obserDisiplinaria;
     }
 

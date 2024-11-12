@@ -1,6 +1,7 @@
 package org.example.Dominio;
 
 public class Persona {
+    String tipoDocumento;
     int cedula;
     String Nombres;
     String Apellidos;
@@ -10,6 +11,15 @@ public class Persona {
     boolean funcionarioPublico;
     String trabajo;
     int numeroHijos;
+
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
 
     public int getCedula() {
         return cedula;
