@@ -24,4 +24,12 @@ public class CotizanteNegro {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+
+    @Override
+    public String toString() {
+        return "org.example.Dominio.CotizanteNegro{" +
+                "cotizante=" + cotizante +
+                ", fecha='" + fecha + '\'' +
+                '}';
+    }
 }
