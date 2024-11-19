@@ -1,5 +1,6 @@
 package org.example.Dominio;
 
+
 import java.util.ArrayList;
 
 public class Publico extends Cotizante{
@@ -46,7 +47,6 @@ public class Publico extends Cotizante{
     public ArrayList<hijos> getListahijos() {
         return listahijos;
     }
-
     public void setListahijos(ArrayList<hijos> listahijos) {
         this.listahijos = listahijos;
     }

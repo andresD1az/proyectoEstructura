@@ -1,9 +1,9 @@
 package org.example.Dominio;
 
 public class hijos {
-    String nombre;
-    int edad;
-    String trabajo;
+    private String nombre;
+    private int edad;
+    private String trabajo;
 
     public hijos(String nombre, int edad, String trabajo) {
         this.nombre = nombre;
@@ -33,5 +33,19 @@ public class hijos {
 
     public void setTrabajo(String trabajo) {
         this.trabajo = trabajo;
+    }
+
+    // Método para generar la información en formato CSV
+    public String infocsv() {
+        return nombre + "/" + edad + "/" + trabajo;
+    }
+
+    // Método para crear un objeto hijos desde una cadena CSV
+    public static hijos fromCsv(String csv) {
+        String[] partes = csv.split("/");
+        if (partes.length != 3) {
+            throw new IllegalArgumentException("Formato inválido para hijo: " + csv);
+        }
+        return new hijos(partes[0], Integer.parseInt(partes[1]), partes[2]);
     }
 }
