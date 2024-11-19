@@ -2,52 +2,46 @@ package org.example.Dominio;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Publico extends Cotizante{
-    boolean condecoraciones;
-    String intitucionPublica;
-    ArrayList<hijos> listahijos;
-    boolean obserDisiplinaria; //observacion diciplinaria
+    private boolean condecoraciones;
+    private String institucionPublica;
+    private List<hijos> listaHijos = new ArrayList<>();
+    private boolean observacionDisciplinaria;
 
     public Publico() {
         super();
     }
-
-    public Publico(boolean condecoraciones, String intitucionPublica, ArrayList<hijos> listahijos, boolean obserDisiplinaria) {
+    public Publico(boolean condecoraciones, String institucionPublica, List<hijos> listaHijos, boolean observacionDisciplinaria) {
         this.condecoraciones = condecoraciones;
-        this.intitucionPublica = intitucionPublica;
-        this.listahijos = listahijos;
-        this.obserDisiplinaria = obserDisiplinaria;
+        this.institucionPublica = institucionPublica;
+        this.listaHijos = listaHijos != null ? listaHijos : new ArrayList<>();
+        this.observacionDisciplinaria = observacionDisciplinaria;
     }
 
     public boolean isCondecoraciones() {
         return condecoraciones;
     }
-
     public void setCondecoraciones(boolean condecoraciones) {
         this.condecoraciones = condecoraciones;
     }
-
-    public String getIntitucionPublica() {
-        return intitucionPublica;
+    public String getInstitucionPublica() {
+        return institucionPublica;
     }
-
-    public void setIntitucionPublica(String intitucionPublica) {
-        this.intitucionPublica = intitucionPublica;
+    public void setInstitucionPublica(String institucionPublica) {
+        this.institucionPublica = institucionPublica;
     }
-
-    public boolean isObserDisiplinaria() {
-        return obserDisiplinaria;
+    public List<hijos> getListaHijos() {
+        return listaHijos;
     }
-
-    public void setObserDisiplinaria(boolean obserDisiplinaria) {
-        this.obserDisiplinaria = obserDisiplinaria;
+    public void setListaHijos(List<hijos> listaHijos) {
+        this.listaHijos = listaHijos;
     }
-
-    public ArrayList<hijos> getListahijos() {
-        return listahijos;
+    public boolean isObservacionDisciplinaria() {
+        return observacionDisciplinaria;
     }
-    public void setListahijos(ArrayList<hijos> listahijos) {
-        this.listahijos = listahijos;
+    public void setObservacionDisciplinaria(boolean observacionDisciplinaria) {
+        this.observacionDisciplinaria = observacionDisciplinaria;
     }
 }

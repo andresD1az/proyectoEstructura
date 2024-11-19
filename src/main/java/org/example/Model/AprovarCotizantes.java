@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AprovarCotizantes {
 
@@ -32,13 +33,13 @@ public class AprovarCotizantes {
 
     public static boolean procesoCotizantePublico(Publico cotizante){
         boolean proceso=true;
-            if(cotizante.getIntitucionPublica().equals("Armada")){
+            if(cotizante.getInstitucionPublica().equals("Armada")){
                 if (cotizante.isCondecoraciones()){
                     return true;
                 }else {
                     return procesoCotizanteCivil(cotizante);
                 }
-            }else if (cotizante.getIntitucionPublica().equals("Inpec")){
+            }else if (cotizante.getInstitucionPublica().equals("Inpec")){
                 if (cotizante.getNumeroHijos() ==0){
                     if (cotizante.isCondecoraciones()){
                         return true;
@@ -46,21 +47,21 @@ public class AprovarCotizantes {
                         return procesoCotizanteCivil(cotizante);
                     }
                 }else {
-                    if (validacionHijos(cotizante.getTrabajo(), cotizante.getListahijos())){
+                    if (validacionHijos(cotizante.getTrabajo(), cotizante.getListaHijos())){
                         return true;
                     }else {
                         return procesoCotizanteCivil(cotizante);
                     }
                 }
-            }else if (cotizante.getIntitucionPublica().equals("Policia")){
-                if (validacionHijos(cotizante.getTrabajo(), cotizante.getListahijos())){
+            }else if (cotizante.getInstitucionPublica().equals("Policia")){
+                if (validacionHijos(cotizante.getTrabajo(), cotizante.getListaHijos())){
                     return true;
                 }else {
                     return procesoCotizanteCivil(cotizante);
                 }
-            }else if (cotizante.getIntitucionPublica().equals("MinSalud") ||
-                    cotizante.getIntitucionPublica().equals("MinInterior")){
-                if (cotizante.isObserDisiplinaria()){
+            }else if (cotizante.getInstitucionPublica().equals("MinSalud") ||
+                    cotizante.getInstitucionPublica().equals("MinInterior")){
+                if (cotizante.isObservacionDisciplinaria()){
                     //proceso de listado a la lista negra
                 }else{
                     return true;
@@ -74,33 +75,33 @@ public class AprovarCotizantes {
                 cotizante.getUbicacionNacimiento().equals("Medellin")||
                 cotizante.getUbicacionNacimiento().equals("Cali")||
                 cotizante.getUbicacionNacimiento().equals("..tan")||
-                cotizante.getUbicacionRecidencia().equals("Bogota")||
-                cotizante.getUbicacionRecidencia().equals("Medellin")||
-                cotizante.getUbicacionRecidencia().equals("Cali")||
-                cotizante.getUbicacionRecidencia().equals("..tan")
+                cotizante.getUbicacionResidencia().equals("Bogota")||
+                cotizante.getUbicacionResidencia().equals("Medellin")||
+                cotizante.getUbicacionResidencia().equals("Cali")||
+                cotizante.getUbicacionResidencia().equals("..tan")
         ){
             proceso=false;
         }else{
             if (cotizante.getEdad() >= 35){
-                if (cotizante.getEmpresaPenciones().equals("Porvenir")){
+                if (cotizante.getEmpresaPensiones().equals("Porvenir")){
                     if (cotizante.getSemanasCotizadas() <800 ){
                         proceso=true;
                     }else {
                         proceso=false;
                     }
-                }else if (cotizante.getEmpresaPenciones().equals("proteccion")){
+                }else if (cotizante.getEmpresaPensiones().equals("proteccion")){
                     if (cotizante.getSemanasCotizadas() <590 ){
                         proceso=true;
                     }else {
                         proceso=false;
                     }
-                }else if (cotizante.getEmpresaPenciones().equals("colfondos")){
+                }else if (cotizante.getEmpresaPensiones().equals("colfondos")){
                     if (cotizante.getSemanasCotizadas() < 300){
                         proceso=true;
                     }else {
                         proceso=false;
                     }
-                }else if (cotizante.getEmpresaPenciones().equals("old mutual")){
+                }else if (cotizante.getEmpresaPensiones().equals("old mutual")){
                     if (cotizante.getSemanasCotizadas() < 100){
                         proceso=true;
                     }else {
@@ -125,7 +126,7 @@ public class AprovarCotizantes {
         }
         return persona;
     }
-    public static boolean validacionHijos(String cargo, ArrayList<hijos> listahijos){
+    public static boolean validacionHijos(String cargo, List<hijos> listahijos){
         boolean validacion=false;
         for (hijos hijo:listahijos){
             if (cargo.equals("Policia") && hijo.getEdad()>=18){
