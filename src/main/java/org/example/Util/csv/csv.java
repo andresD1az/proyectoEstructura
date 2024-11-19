@@ -16,10 +16,10 @@ public class csv {
             br.readLine();
             if ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(";");
-                String tipo = datos[0];
-                if ("Cotizante".equalsIgnoreCase(tipo)) {
+                String tipo = datos[6];
+                if ("false".equalsIgnoreCase(tipo)) {
                     return parsearCotizante(datos);
-                } else if ("Publico".equalsIgnoreCase(tipo)) {
+                } else if ("true".equalsIgnoreCase(tipo)) {
                     return parsearPublico(datos);
                 } else {
                     throw new IllegalArgumentException("Tipo desconocido: " + tipo);
@@ -70,7 +70,7 @@ public class csv {
     }
     
     private static String generarLineaCSV(Cotizante cotizante) {
-        return cotizante.getCedula() + ";" +
+        return  cotizante.getCedula() + ";" +
                 cotizante.getTipoDocumento() + ";" +
                 cotizante.getNombres() + ";" +
                 cotizante.getApellidos() + ";" +
@@ -144,12 +144,10 @@ public class csv {
 
     public static String obtenerYEliminarArchivoVacio(String rutaCarpeta) {
         File carpeta = new File(rutaCarpeta);
-
         // Verificar si la ruta es una carpeta
         if (carpeta.isDirectory()) {
             // Obtener todos los archivos dentro de la carpeta que son CSV
             File[] archivos = carpeta.listFiles((dir, nombreArchivo) -> nombreArchivo.endsWith(".csv"));
-
             // Verificar si hay archivos CSV
             if (archivos != null && archivos.length > 0) {
                 for (File archivo : archivos) {
@@ -169,7 +167,6 @@ public class csv {
         } else {
             System.out.println("La ruta proporcionada no es una carpeta.");
         }
-
         return null;  // Si no se encuentra ningún archivo válido
     }
 

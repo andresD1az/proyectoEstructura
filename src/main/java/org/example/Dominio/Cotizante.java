@@ -32,5 +32,15 @@ public class Cotizante extends Persona {
         if (semanasCotizadas < 0) throw new IllegalArgumentException("Las semanas cotizadas no pueden ser negativas.");
         this.semanasCotizadas = semanasCotizadas;
     }
+
+    @Override
+    public String toString() {
+        return "org.example.Dominio.Cotizante{" +'\n' +
+                "embargado=" + embargado +'\n' +
+                ", prepencionado=" + prepencionado +'\n' +
+                ", empresaPensiones='" + empresaPensiones + '\n' +
+                ", semanasCotizadas=" + semanasCotizadas +'\n' +
+                "} " + super.toString();
+    }
 }
 

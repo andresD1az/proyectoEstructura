@@ -44,4 +44,14 @@ public class Publico extends Cotizante{
     public void setObservacionDisciplinaria(boolean observacionDisciplinaria) {
         this.observacionDisciplinaria = observacionDisciplinaria;
     }
+
+    @Override
+    public String toString() {
+        return "org.example.Dominio.Publico{" +'\n' +
+                "condecoraciones=" + condecoraciones +'\n' +
+                ", institucionPublica='" + institucionPublica + '\n' +
+                ", listaHijos=" + listaHijos.toString() +'\n' +
+                ", observacionDisciplinaria=" + observacionDisciplinaria +'\n' +
+                "} " + super.toString();
+    }
 }

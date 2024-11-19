@@ -78,4 +78,20 @@ public class Persona {
         if (numeroHijos < 0) throw new IllegalArgumentException("El número de hijos no puede ser negativo.");
         this.numeroHijos = numeroHijos;
     }
+
+    @Override
+    public String toString() {
+        return "org.example.Dominio.Persona{" +
+                "tipoDocumento='" + tipoDocumento + '\n' +
+                ", cedula=" + cedula + '\n' +
+                ", nombres='" + nombres + '\n' +
+                ", apellidos='" + apellidos + '\n' +
+                ", ubicacionNacimiento='" + ubicacionNacimiento + '\n' +
+                ", ubicacionResidencia='" + ubicacionResidencia + '\n' +
+                ", edad=" + edad + '\n' +
+                ", funcionarioPublico=" + funcionarioPublico +'\n' +
+                ", trabajo='" + trabajo + '\n' +
+                ", numeroHijos=" + numeroHijos +'\n' +
+                '}';
+    }
 }

@@ -40,4 +40,13 @@ public class hijos {
         }
         return new hijos(partes[0], Integer.parseInt(partes[1]), partes[2]);
     }
+
+    @Override
+    public String toString() {
+        return "org.example.Dominio.hijos{" +
+                "nombre='" + nombre + '\n' +
+                ", edad=" + edad +'\n' +
+                ", trabajo='" + trabajo + '\n' +
+                '}';
+    }
 }
