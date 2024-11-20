@@ -1,5 +1,7 @@
 package org.example.Model;
 
+import org.example.Util.csv.csv;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,6 +22,8 @@ public class Carpetas {
         File carpeta = new File(ubicacion + nombreCarpeta);
         if (carpeta.mkdirs()) {
             System.out.println("Carpeta creada exitosamente en: " + carpeta.getAbsolutePath());
+            String nombreArchivo=nombre+fechaActual;
+            csv.crearArchivoCSVVacioEnCarpeta(carpeta.getAbsolutePath(),nombreArchivo);
             return true;
         } else {
             System.out.println("No se pudo crear la carpeta o ya existe.");

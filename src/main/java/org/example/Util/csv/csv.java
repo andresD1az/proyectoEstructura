@@ -81,6 +81,32 @@ public class csv {
             System.err.println("Error al reemplazar el archivo original: " + e.getMessage());
         }
     }
+    public static void crearArchivoCSVVacioEnCarpeta(String rutaCarpeta, String nombreArchivo) {
+        // Crear el objeto File con la ruta completa (carpeta + nombre del archivo CSV)
+        File carpeta = new File(rutaCarpeta);
+        File archivo = new File(carpeta, nombreArchivo);
+
+        try {
+            // Verificar si la carpeta existe, si no, crearla
+            if (!carpeta.exists()) {
+                if (carpeta.mkdirs()) {
+                    System.out.println("Carpeta creada en: " + rutaCarpeta);
+                } else {
+                    System.err.println("No se pudo crear la carpeta.");
+                    return;
+                }
+            }
+
+            // Crear el archivo si no existe
+            if (archivo.createNewFile()) {
+                System.out.println("Archivo CSV vacío creado: " + archivo.getAbsolutePath());
+            } else {
+                System.out.println("El archivo CSV ya existe.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al crear el archivo: " + e.getMessage());
+        }
+    }
     
     private static String generarLineaCSV(Cotizante cotizante) {
         return  cotizante.getTipoDocumento() + ";" +
