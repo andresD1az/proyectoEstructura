@@ -31,41 +31,35 @@ public class csv {
     }
     public static void agregarObjeto(String rutaArchivo, Persona persona) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
-            if (persona instanceof Cotizante) {
+            if (!persona.isFuncionarioPublico()) {
                 Cotizante cotizante = (Cotizante) persona;
-                bw.write("Cotizante," + generarLineaCSV(cotizante));
-            } else if (persona instanceof Publico) {
+                bw.write(generarLineaCSV(cotizante));
+            } else if (persona.isFuncionarioPublico()) {
                 Publico publico = (Publico) persona;
-                bw.write("Publico," + generarLineaCSV(publico));
+                bw.write(generarLineaCSV(publico));
             }
             bw.newLine();
         } catch (IOException e) {
             System.err.println("Error escribiendo en el archivo: " + e.getMessage());
         }
     }
-
     public static void eliminarPrimeraLinea(String rutaArchivo) {
         File archivoOriginal = new File(rutaArchivo);
         File archivoTemporal = new File(rutaArchivo + ".tmp");
-
         try (BufferedReader br = new BufferedReader(new FileReader(archivoOriginal));
              BufferedWriter bw = new BufferedWriter(new FileWriter(archivoTemporal))) {
-
             // Saltar la primera línea (cabecera o línea inicial)
             br.readLine();
-
             // Escribir el resto del contenido en el archivo temporal
             String linea;
             while ((linea = br.readLine()) != null) {
                 bw.write(linea);
                 bw.newLine();
             }
-
         } catch (IOException e) {
             System.err.println("Error procesando el archivo: " + e.getMessage());
             return; // Salir en caso de error
         }
-
         // Reemplazar el archivo original con el archivo temporal
         try {
             if (archivoOriginal.delete()) {
@@ -107,12 +101,15 @@ public class csv {
             System.err.println("Error al crear el archivo: " + e.getMessage());
         }
     }
-    
+
     private static String generarLineaCSV(Cotizante cotizante) {
-        return  cotizante.getTipoDocumento() + ";" +
+        // Generar la línea CSV con todos los atributos de Cotizante
+        return cotizante.getTipoDocumento() + ";" +
                 cotizante.getCedula() + ";" +
                 cotizante.getNombres() + ";" +
                 cotizante.getApellidos() + ";" +
+                cotizante.getUbicacionNacimiento() + ";" +
+                cotizante.getUbicacionResidencia() + ";" +
                 cotizante.getEdad() + ";" +
                 cotizante.isFuncionarioPublico() + ";" +
                 cotizante.getTrabajo() + ";" +
@@ -125,14 +122,14 @@ public class csv {
 
     private static String generarLineaCSV(Publico publico) {
         String hijosCsv = publico.getListaHijos().stream()
-                .map(hijos::infocsv)
-                .reduce((a, b) -> a + "#" + b)
-                .orElse("");
+                .map(hijos::infocsv) // Se asume que infocsv devuelve el formato CSV para un hijo
+                .reduce((a, b) -> a + "#" + b) // Concatenar hijos con separador #
+                .orElse(""); // Si no hay hijos, devuelve una cadena vacía
         return generarLineaCSV((Cotizante) publico) + ";" +
                 publico.isCondecoraciones() + ";" +
                 publico.getInstitucionPublica() + ";" +
-                publico.isObservacionDisciplinaria() + ";" +
-                hijosCsv;
+                hijosCsv + ";" +
+                publico.isObservacionDisciplinaria();
     }
     
     private static Cotizante pasarCotizante(String[] datos) {
@@ -209,7 +206,6 @@ public class csv {
         return null;  // Si no se encuentra ningún archivo válido
     }
 
-    // Método auxiliar para verificar si el archivo está vacío o solo tiene la cabecera
     private static boolean esArchivoVacio(File archivo) {
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
             String linea;
