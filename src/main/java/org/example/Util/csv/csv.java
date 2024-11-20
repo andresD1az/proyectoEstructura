@@ -234,7 +234,7 @@ public class csv {
                 lineas++;
             }
             // Si el archivo tiene solo una línea (la cabecera), se considera vacío
-            return lineas <= 1;
+            return lineas <= 0;
         } catch (IOException e) {
             e.printStackTrace();
             return false;  // Si ocurre un error al leer, se considera no vacío

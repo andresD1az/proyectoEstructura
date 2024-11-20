@@ -80,9 +80,9 @@ public class ProcesoProgramado {
         String rutafinal= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
         for (int i=1; i<=5; i++){
             Persona p= csv.leerUnObjeto(rutainicio);
-//            if (csv.agregarObjeto(rutafinal,p)){
-//                csv.eliminarPrimeraLinea(rutainicio);
-//            }
+            if (csv.agregarObjeto(rutafinal,p)){
+                csv.eliminarPrimeraLinea(rutainicio);
+            }
         }
     }
 

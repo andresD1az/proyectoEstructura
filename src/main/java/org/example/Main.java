@@ -39,6 +39,7 @@ public class Main {
         System.out.println("Ejecutando proceso cada hora: " + new Date());
         String rutainicio= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEntrantes");
         String rutafinal= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
+
         for (int i=1; i<=5; i++){
             Persona p= csv.leerUnObjeto(rutainicio);
             if (csv.agregarObjeto(rutafinal,p)){
