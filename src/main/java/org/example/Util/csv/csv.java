@@ -194,6 +194,8 @@ public class csv {
                     if (!esArchivoVacio(archivo)) {  // Retornar si el archivo tiene datos
                         System.out.println("Archivo con datos encontrado: " + archivo.getAbsolutePath());
                         return archivo.getAbsolutePath();
+                    }else if (esArchivoVacio(archivo) && archivos.length <=1){
+                        return archivo.getAbsolutePath();
                     }
                 }
             }
