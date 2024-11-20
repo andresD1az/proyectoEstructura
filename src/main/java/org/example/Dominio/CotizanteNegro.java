@@ -1,35 +1,29 @@
 package org.example.Dominio;
 
 public class CotizanteNegro {
-    Cotizante cotizante;
+    Persona persona;
     String fecha;
 
-    public CotizanteNegro(Cotizante cotizante, String fecha) {
-        this.cotizante = cotizante;
+    public CotizanteNegro(Persona persona, String fecha) {
+        this.persona = persona;
         this.fecha = fecha;
     }
-
-    public Cotizante getCotizante() {
-        return cotizante;
+    public Persona getPersona() {
+        return persona;
     }
-
-    public void setCotizante(Cotizante cotizante) {
-        this.cotizante = cotizante;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
-
     public String getFecha() {
         return fecha;
     }
-
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
     @Override
     public String toString() {
-        return "org.example.Dominio.CotizanteNegro{" +
-                "cotizante=" + cotizante +
-                ", fecha='" + fecha + '\'' +
-                '}';
+        return "persona=" + persona +
+                ", fecha='" + fecha;
     }
 }

@@ -1,4 +1,5 @@
 package org.example;
+import org.example.Dominio.Persona;
 import org.example.Model.Carpetas;
 import org.example.Util.csv.csv;
 
@@ -70,12 +71,18 @@ public class ProcesoProgramado {
                 csv.crearArchivoCSVVacioEnCarpeta(carpeta,nombreArchivo);
             }
         }
+        csv.eliminarArchivosVacios("src/main/java/org/example/archivos/SolicitudesEntrantes");
     }
 
     private static void realizarProcesoHorario() {
         System.out.println("Ejecutando proceso cada hora: " + new Date());
+        String rutainicio= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEntrantes");
+        String rutafinal= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
         for (int i=1; i<=5; i++){
-
+            Persona p= csv.leerUnObjeto(rutainicio);
+//            if (csv.agregarObjeto(rutafinal,p)){
+//                csv.eliminarPrimeraLinea(rutainicio);
+//            }
         }
     }
 

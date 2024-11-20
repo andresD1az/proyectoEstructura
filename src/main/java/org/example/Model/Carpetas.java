@@ -22,9 +22,7 @@ public class Carpetas {
         File carpeta = new File(ubicacion + nombreCarpeta);
         if (carpeta.mkdirs()) {
             System.out.println("Carpeta creada exitosamente en: " + carpeta.getAbsolutePath());
-            String nombreArchivo=nombre+fechaActual;
-
-            return ""+carpeta.getAbsolutePath();
+            return carpeta.getAbsolutePath();
         } else {
             System.out.println("No se pudo crear la carpeta o ya existe.");
             return "false";

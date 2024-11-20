@@ -4,8 +4,6 @@ import org.example.Dominio.Cotizante;
 import org.example.Dominio.CotizanteNegro;
 import org.example.Dominio.Publico;
 import org.example.Dominio.hijos;
-import org.example.Util.ListaEnlazada;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -120,9 +118,9 @@ public class AprovarCotizantes {
         ArrayList<CotizanteNegro> listanegra=new ArrayList<>();
         CotizanteNegro persona=null;
         for (CotizanteNegro cotizante:listanegra){
-            if (cotizante.getCotizante().getCedula() == cedula){
-                persona=cotizante;
-            }
+//            if (cotizante.getCotizante().getCedula() == cedula){
+//                persona=cotizante;
+//            }
         }
         return persona;
     }

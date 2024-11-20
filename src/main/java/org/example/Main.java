@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Dominio.CotizanteNegro;
 import org.example.Dominio.Persona;
 import org.example.Model.Carpetas;
 import org.example.Util.csv.csv;
@@ -27,11 +28,22 @@ public class Main {
 //            System.out.println("El carpeta se ha comprimido");
 //            carpetas.crearCarpeta();
 //        }
-        String ruta = csv.obtenerYEliminarArchivoVacio("src/main/java/org/example/archivos/SolicitudesEntrantes");
-        Persona p = csv.leerUnObjeto(ruta);
+        //String ruta = csv.obtenerYEliminarArchivoVacio("src/main/java/org/example/archivos/SolicitudesEntrantes");
+        //Persona p = csv.leerUnObjeto(ruta);
 //        System.out.println(p.toString());
 //        csv.eliminarPrimeraLinea("src/main/java/org/example/archivos/SolicitudesEntrantes/cotizantes pendientes.csv");
             //Carpetas.crearCarpeta();
-            csv.agregarObjeto("src/main/java/org/example/archivos/SolicitudesProcesadas_2024_11_20/SolicitudesProcesadas_2024_11_20",p);
+            //csv.agregarObjeto("src/main/java/org/example/archivos/SolicitudesProcesadas_2024_11_20/SolicitudesProcesadas_2024_11_20",p);
+//        CotizanteNegro cotizanteNegro=new CotizanteNegro(p,"lol");
+//        System.out.println(cotizanteNegro.toString());
+        System.out.println("Ejecutando proceso cada hora: " + new Date());
+        String rutainicio= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEntrantes");
+        String rutafinal= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
+        for (int i=1; i<=5; i++){
+            Persona p= csv.leerUnObjeto(rutainicio);
+            if (csv.agregarObjeto(rutafinal,p)){
+                csv.eliminarPrimeraLinea(rutainicio);
+            }
+        }
     }
 }

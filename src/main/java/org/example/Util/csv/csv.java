@@ -29,7 +29,7 @@ public class csv {
         }
         return null; // Retorna null si no hay datos o si ocurre un error
     }
-    public static void agregarObjeto(String rutaArchivo, Persona persona) {
+    public static boolean agregarObjeto(String rutaArchivo, Persona persona) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(rutaArchivo, true))) {
             if (!persona.isFuncionarioPublico()) {
                 Cotizante cotizante = (Cotizante) persona;
@@ -39,8 +39,10 @@ public class csv {
                 bw.write(generarLineaCSV(publico));
             }
             bw.newLine();
+            return true;
         } catch (IOException e) {
             System.err.println("Error escribiendo en el archivo: " + e.getMessage());
+            return false;
         }
     }
     public static void eliminarPrimeraLinea(String rutaArchivo) {
@@ -180,13 +182,32 @@ public class csv {
         return publico;
     }
 
-    public static String obtenerYEliminarArchivoVacio(String rutaCarpeta) {
+    public static String obtenerArchivoConDatos(String rutaCarpeta) {
         File carpeta = new File(rutaCarpeta);
         // Verificar si la ruta es una carpeta
         if (carpeta.isDirectory()) {
             // Obtener todos los archivos dentro de la carpeta que son CSV
             File[] archivos = carpeta.listFiles((dir, nombreArchivo) -> nombreArchivo.endsWith(".csv"));
             // Verificar si hay archivos CSV
+            if (archivos != null && archivos.length > 0) {
+                for (File archivo : archivos) {
+                    if (!esArchivoVacio(archivo)) {  // Retornar si el archivo tiene datos
+                        System.out.println("Archivo con datos encontrado: " + archivo.getAbsolutePath());
+                        return archivo.getAbsolutePath();
+                    }
+                }
+            }
+        } else {
+            System.out.println("La ruta proporcionada no es una carpeta.");
+        }
+        return null;  // Si no se encuentra ningún archivo con datos
+    }
+
+    public static void eliminarArchivosVacios(String rutaCarpeta) {
+        File carpeta = new File(rutaCarpeta);
+        // Verificar si la ruta es una carpeta
+        if (carpeta.isDirectory()) {
+            File[] archivos = carpeta.listFiles((dir, nombreArchivo) -> nombreArchivo.endsWith(".csv"));
             if (archivos != null && archivos.length > 0) {
                 for (File archivo : archivos) {
                     if (esArchivoVacio(archivo)) {  // Verificar si el archivo está vacío o solo contiene la cabecera
@@ -196,16 +217,12 @@ public class csv {
                         } else {
                             System.out.println("No se pudo eliminar el archivo: " + archivo.getAbsolutePath());
                         }
-                    } else {
-                        // Si el archivo no está vacío y tiene datos, retornar su ubicación
-                        return archivo.getAbsolutePath();
                     }
                 }
             }
         } else {
             System.out.println("La ruta proporcionada no es una carpeta.");
         }
-        return null;  // Si no se encuentra ningún archivo válido
     }
 
     private static boolean esArchivoVacio(File archivo) {
