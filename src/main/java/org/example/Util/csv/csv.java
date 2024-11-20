@@ -135,41 +135,43 @@ public class csv {
     private static Cotizante pasarCotizante(String[] datos) {
         Cotizante cotizante = new Cotizante();
         cotizante.setTipoDocumento(datos[0]);
-        cotizante.setNombres(datos[1]);
-        cotizante.setApellidos(datos[2]);
-        cotizante.setUbicacionNacimiento(datos[3]);
-        cotizante.setUbicacionResidencia(datos[4]);
-        cotizante.setEdad(Integer.parseInt(datos[5]));
-        cotizante.setFuncionarioPublico(Boolean.parseBoolean(datos[6]));
-        cotizante.setTrabajo(datos[7]);
-        cotizante.setNumeroHijos(Integer.parseInt(datos[8]));
-        cotizante.setEmbargado(Boolean.parseBoolean(datos[9]));
-        cotizante.setPrepencionado(Boolean.parseBoolean(datos[10]));
-        cotizante.setEmpresaPensiones(datos[11]);
-        cotizante.setSemanasCotizadas(Double.parseDouble(datos[12]));
+        cotizante.setCedula(Integer.parseInt(datos[1]));
+        cotizante.setNombres(datos[2]);
+        cotizante.setApellidos(datos[3]);
+        cotizante.setUbicacionNacimiento(datos[4]);
+        cotizante.setUbicacionResidencia(datos[5]);
+        cotizante.setEdad(Integer.parseInt(datos[6]));
+        cotizante.setFuncionarioPublico(Boolean.parseBoolean(datos[7]));
+        cotizante.setTrabajo(datos[8]);
+        cotizante.setNumeroHijos(Integer.parseInt(datos[9]));
+        cotizante.setEmbargado(Boolean.parseBoolean(datos[10]));
+        cotizante.setPrepencionado(Boolean.parseBoolean(datos[11]));
+        cotizante.setEmpresaPensiones(datos[12]);
+        cotizante.setSemanasCotizadas(Double.parseDouble(datos[13]));
         return cotizante;
     }
     private static Publico pasarPublico(String[] datos) {
         Publico publico = new Publico();
         publico.setTipoDocumento(datos[0]);
-        publico.setNombres(datos[1]);
-        publico.setApellidos(datos[2]);
-        publico.setUbicacionNacimiento(datos[3]);
-        publico.setUbicacionResidencia(datos[4]);
-        publico.setEdad(Integer.parseInt(datos[5]));
-        publico.setFuncionarioPublico(Boolean.parseBoolean(datos[6]));
-        publico.setTrabajo(datos[7]);
-        publico.setNumeroHijos(Integer.parseInt(datos[8]));
-        publico.setEmbargado(Boolean.parseBoolean(datos[9]));
-        publico.setPrepencionado(Boolean.parseBoolean(datos[10]));
-        publico.setEmpresaPensiones(datos[11]);
-        publico.setSemanasCotizadas(Double.parseDouble(datos[12]));
-        publico.setCondecoraciones(Boolean.parseBoolean(datos[13]));
-        publico.setInstitucionPublica(datos[14]);
-        publico.setObservacionDisciplinaria(Boolean.parseBoolean(datos[16]));
+        publico.setCedula(Integer.parseInt(datos[1]));
+        publico.setNombres(datos[2]);
+        publico.setApellidos(datos[3]);
+        publico.setUbicacionNacimiento(datos[4]);
+        publico.setUbicacionResidencia(datos[5]);
+        publico.setEdad(Integer.parseInt(datos[6]));
+        publico.setFuncionarioPublico(Boolean.parseBoolean(datos[7]));
+        publico.setTrabajo(datos[8]);
+        publico.setNumeroHijos(Integer.parseInt(datos[9]));
+        publico.setEmbargado(Boolean.parseBoolean(datos[10]));
+        publico.setPrepencionado(Boolean.parseBoolean(datos[11]));
+        publico.setEmpresaPensiones(datos[12]);
+        publico.setSemanasCotizadas(Double.parseDouble(datos[13]));
+        publico.setCondecoraciones(Boolean.parseBoolean(datos[14]));
+        publico.setInstitucionPublica(datos[15]);
+        publico.setObservacionDisciplinaria(Boolean.parseBoolean(datos[17]));
         // Parsar lista de hijos
-        if (datos.length > 16 && !datos[15].isEmpty()) {
-            String[] hijosArray = datos[15].split("#");
+        if (datos.length > 16 && !datos[16].isEmpty()) {
+            String[] hijosArray = datos[16].split("#");
             for (String hijoCsv : hijosArray) {
                 publico.getListaHijos().add(hijos.fromCsv(hijoCsv));
             }
