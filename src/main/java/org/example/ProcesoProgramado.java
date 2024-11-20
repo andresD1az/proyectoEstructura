@@ -1,6 +1,8 @@
 package org.example;
 import org.example.Model.Carpetas;
+import org.example.Util.csv.csv;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.Executors;
@@ -59,9 +61,13 @@ public class ProcesoProgramado {
         System.out.println("Ejecutando proceso diario a la 1:00 AM: " + new Date());
         System.out.println("Ejecutando proceso a la 1:00 AM: " + new Date());
         Carpetas carpetas  = new Carpetas();
+        String nombre="SolicitudesProcesadas_";
+        String fechaActual = new SimpleDateFormat("yyyy_MM_dd").format(new Date());
+        String nombreArchivo = nombre+ fechaActual;
         if (carpetas.comprimirCarpeta()){
             if (carpetas.eliminarCarpeta()){
-                carpetas.crearCarpeta();
+                String carpeta = carpetas.crearCarpeta();
+                csv.crearArchivoCSVVacioEnCarpeta(carpeta,nombreArchivo);
             }
         }
     }

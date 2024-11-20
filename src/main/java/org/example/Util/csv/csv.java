@@ -15,7 +15,7 @@ public class csv {
             String linea;
             if ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(";");
-                String tipo = datos[6];
+                String tipo = datos[7];
                 if ("false".equalsIgnoreCase(tipo)) {
                     return pasarCotizante(datos);
                 } else if ("true".equalsIgnoreCase(tipo)) {

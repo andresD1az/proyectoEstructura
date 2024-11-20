@@ -27,7 +27,8 @@ public class Main {
 //            System.out.println("El carpeta se ha comprimido");
 //            carpetas.crearCarpeta();
 //        }
-        Persona p = csv.leerUnObjeto("src/main/java/org/example/archivos/SolicitudesEntrantes/cotizantes pendientes.csv");
+        String ruta = csv.obtenerYEliminarArchivoVacio("src/main/java/org/example/archivos/SolicitudesEntrantes");
+        Persona p = csv.leerUnObjeto(ruta);
 //        System.out.println(p.toString());
 //        csv.eliminarPrimeraLinea("src/main/java/org/example/archivos/SolicitudesEntrantes/cotizantes pendientes.csv");
             //Carpetas.crearCarpeta();
