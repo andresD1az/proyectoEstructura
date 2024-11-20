@@ -13,14 +13,13 @@ public class csv {
     public static Persona leerUnObjeto(String rutaArchivo) {
         try (BufferedReader br = new BufferedReader(new FileReader(rutaArchivo))) {
             String linea;
-            br.readLine();
             if ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(";");
                 String tipo = datos[6];
                 if ("false".equalsIgnoreCase(tipo)) {
-                    return parsearCotizante(datos);
+                    return pasarCotizante(datos);
                 } else if ("true".equalsIgnoreCase(tipo)) {
-                    return parsearPublico(datos);
+                    return pasarPublico(datos);
                 } else {
                     throw new IllegalArgumentException("Tipo desconocido: " + tipo);
                 }
@@ -44,28 +43,42 @@ public class csv {
             System.err.println("Error escribiendo en el archivo: " + e.getMessage());
         }
     }
-    
+
     public static void eliminarPrimeraLinea(String rutaArchivo) {
         File archivoOriginal = new File(rutaArchivo);
         File archivoTemporal = new File(rutaArchivo + ".tmp");
+
         try (BufferedReader br = new BufferedReader(new FileReader(archivoOriginal));
              BufferedWriter bw = new BufferedWriter(new FileWriter(archivoTemporal))) {
-            String cabecera = br.readLine();
-            if (cabecera != null) {
-                bw.write(cabecera);
-                bw.newLine();
-            }
+
+            // Saltar la primera línea (cabecera o línea inicial)
             br.readLine();
+
+            // Escribir el resto del contenido en el archivo temporal
             String linea;
             while ((linea = br.readLine()) != null) {
                 bw.write(linea);
                 bw.newLine();
             }
+
         } catch (IOException e) {
-            System.err.println("Error eliminando la primera línea: " + e.getMessage());
+            System.err.println("Error procesando el archivo: " + e.getMessage());
+            return; // Salir en caso de error
         }
-        if (!archivoOriginal.delete() || !archivoTemporal.renameTo(archivoOriginal)) {
-            System.err.println("Error al reemplazar el archivo original.");
+
+        // Reemplazar el archivo original con el archivo temporal
+        try {
+            if (archivoOriginal.delete()) {
+                if (!archivoTemporal.renameTo(archivoOriginal)) {
+                    System.err.println("No se pudo renombrar el archivo temporal al original.");
+                } else {
+                    System.out.println("Primera línea eliminada correctamente.");
+                }
+            } else {
+                System.err.println("No se pudo eliminar el archivo original.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al reemplazar el archivo original: " + e.getMessage());
         }
     }
     
@@ -96,12 +109,13 @@ public class csv {
                 hijosCsv;
     }
     
-    private static Cotizante parsearCotizante(String[] datos) {
+    private static Cotizante pasarCotizante(String[] datos) {
         Cotizante cotizante = new Cotizante();
-        cotizante.setCedula(Integer.parseInt(datos[1]));
-        cotizante.setTipoDocumento(datos[2]);
-        cotizante.setNombres(datos[3]);
-        cotizante.setApellidos(datos[4]);
+        cotizante.setTipoDocumento(datos[0]);
+        cotizante.setNombres(datos[1]);
+        cotizante.setApellidos(datos[2]);
+        cotizante.setUbicacionNacimiento(datos[3]);
+        cotizante.setUbicacionResidencia(datos[4]);
         cotizante.setEdad(Integer.parseInt(datos[5]));
         cotizante.setFuncionarioPublico(Boolean.parseBoolean(datos[6]));
         cotizante.setTrabajo(datos[7]);
@@ -112,12 +126,13 @@ public class csv {
         cotizante.setSemanasCotizadas(Double.parseDouble(datos[12]));
         return cotizante;
     }
-    private static Publico parsearPublico(String[] datos) {
+    private static Publico pasarPublico(String[] datos) {
         Publico publico = new Publico();
-        publico.setCedula(Integer.parseInt(datos[1]));
-        publico.setTipoDocumento(datos[2]);
-        publico.setNombres(datos[3]);
-        publico.setApellidos(datos[4]);
+        publico.setTipoDocumento(datos[0]);
+        publico.setNombres(datos[1]);
+        publico.setApellidos(datos[2]);
+        publico.setUbicacionNacimiento(datos[3]);
+        publico.setUbicacionResidencia(datos[4]);
         publico.setEdad(Integer.parseInt(datos[5]));
         publico.setFuncionarioPublico(Boolean.parseBoolean(datos[6]));
         publico.setTrabajo(datos[7]);
@@ -128,12 +143,10 @@ public class csv {
         publico.setSemanasCotizadas(Double.parseDouble(datos[12]));
         publico.setCondecoraciones(Boolean.parseBoolean(datos[13]));
         publico.setInstitucionPublica(datos[14]);
-        publico.setObservacionDisciplinaria(Boolean.parseBoolean(datos[15]));
-
-        // Parsear lista de hijos
-        String hijosCsv = datos[16];
-        if (!hijosCsv.isEmpty()) {
-            String[] hijosArray = hijosCsv.split("\\|");
+        publico.setObservacionDisciplinaria(Boolean.parseBoolean(datos[16]));
+        // Parsar lista de hijos
+        if (datos.length > 16 && !datos[15].isEmpty()) {
+            String[] hijosArray = datos[15].split("#");
             for (String hijoCsv : hijosArray) {
                 publico.getListaHijos().add(hijos.fromCsv(hijoCsv));
             }

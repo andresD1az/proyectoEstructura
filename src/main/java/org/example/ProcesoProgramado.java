@@ -68,7 +68,9 @@ public class ProcesoProgramado {
 
     private static void realizarProcesoHorario() {
         System.out.println("Ejecutando proceso cada hora: " + new Date());
-        // Aquí puedes añadir el código del proceso que quieres ejecutar cada hora
+        for (int i=1; i<=5; i++){
+
+        }
     }
 
     public static void main(String[] args) {

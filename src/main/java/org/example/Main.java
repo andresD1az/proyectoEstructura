@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Dominio.Persona;
 import org.example.Model.Carpetas;
 import org.example.Util.csv.csv;
 
@@ -26,7 +27,8 @@ public class Main {
 //            System.out.println("El carpeta se ha comprimido");
 //            carpetas.crearCarpeta();
 //        }
-        csv c = new csv();
-
+        Persona p = csv.leerUnObjeto("src/main/java/org/example/archivos/SolicitudesEntrantes/cotizantes pendientes.csv");
+        System.out.println(p.toString());
+        csv.eliminarPrimeraLinea("src/main/java/org/example/archivos/SolicitudesEntrantes/cotizantes pendientes.csv");
     }
 }
