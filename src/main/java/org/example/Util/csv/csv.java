@@ -70,8 +70,8 @@ public class csv {
     }
     
     private static String generarLineaCSV(Cotizante cotizante) {
-        return  cotizante.getCedula() + ";" +
-                cotizante.getTipoDocumento() + ";" +
+        return  cotizante.getTipoDocumento() + ";" +
+                cotizante.getCedula() + ";" +
                 cotizante.getNombres() + ";" +
                 cotizante.getApellidos() + ";" +
                 cotizante.getEdad() + ";" +
