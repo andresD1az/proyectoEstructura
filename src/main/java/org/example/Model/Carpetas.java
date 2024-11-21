@@ -48,7 +48,6 @@ public class Carpetas {
             return false;
         }
     }
-
     private static void comprimirDirectorio(File archivoActual, String nombreArchivo, ZipOutputStream zos) throws IOException {
         if (archivoActual.isDirectory()) {
             // Añadir una entrada de directorio
