@@ -1,10 +1,14 @@
 package org.example;
 
+import org.example.Dominio.Cotizante;
 import org.example.Dominio.CotizanteNegro;
 import org.example.Dominio.Persona;
+import org.example.Dominio.Publico;
+import org.example.Model.AprovarCotizantes;
 import org.example.Model.Carpetas;
 import org.example.Util.csv.csv;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -37,14 +41,32 @@ public class Main {
 //        CotizanteNegro cotizanteNegro=new CotizanteNegro(p,"lol");
 //        System.out.println(cotizanteNegro.toString());
         System.out.println("Ejecutando proceso cada hora: " + new Date());
-        String rutainicio= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEntrantes");
-        String rutafinal= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
+//        String rutainicio= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEntrantes");
+//        String rutafinal= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
+//
+//        for (int i=1; i<=5; i++){
+//            Persona p= csv.leerUnObjeto(rutainicio);
+//            if (csv.agregarObjeto(rutafinal,p)){
+//                csv.eliminarPrimeraLinea(rutainicio);
+//            }
+//        }
+        procesoAprovacion();
+    }
+    public static void procesoAprovacion(){
+        String rutainicio= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
+        String ubicacion = "src/main/java/org/example/archivos/";
+        String nombre="SolicitudesProcesadas_";
+        String fechaActual = new SimpleDateFormat("yyyy_MM_dd").format(new Date());
+        String nombreCarpeta = nombre+ fechaActual;
+        String rutafinal = csv.obtenerArchivoConDatos(""+ubicacion+nombreCarpeta);
+        Persona cotizante= csv.leerUnObjeto(rutainicio);
+        if (AprovarCotizantes.procesocotizante((Cotizante) cotizante)){
+            if (cotizante.isFuncionarioPublico()){
+                if (AprovarCotizantes.procesoCotizantePublico((Publico) cotizante)){
 
-        for (int i=1; i<=5; i++){
-            Persona p= csv.leerUnObjeto(rutainicio);
-            if (csv.agregarObjeto(rutafinal,p)){
-                csv.eliminarPrimeraLinea(rutainicio);
+                }
             }
         }
+
     }
 }
