@@ -28,6 +28,7 @@ public class AprovarCotizantes {
                 centinela=false;
             }
         }
+
         if (cotizante.isPrepencionado()){
             centinela=false;
         }
@@ -136,7 +137,6 @@ public class AprovarCotizantes {
             }
         }
 
-        // Retornar null si no se encuentra el cotizante
         return null;
     }
 
