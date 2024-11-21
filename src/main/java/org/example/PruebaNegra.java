@@ -10,6 +10,7 @@ import java.util.Date;
 
 public class PruebaNegra {
     public static void main(String[] args) {
+        //Pruebas de los embargados
         String rutanegra = csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/ListaNegra");
         String rutaProceso = csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
         Cotizante cotizante = (Cotizante) csv.leerUnObjeto(rutaProceso);
