@@ -1,29 +1,35 @@
 package org.example.Dominio;
 
 public class CotizanteNegro {
-    Persona persona;
-    String fecha;
+    private Cotizante cotizante; // Puede ser una instancia de Cotizante o Publico
+    private String fecha;
 
-    public CotizanteNegro(Persona persona, String fecha) {
-        this.persona = persona;
+    public CotizanteNegro(Cotizante cotizante, String fecha) {
+        this.cotizante = cotizante;
         this.fecha = fecha;
     }
-    public Persona getPersona() {
-        return persona;
+
+    public Cotizante getCotizante() {
+        return cotizante;
     }
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+
+    public void setCotizante(Cotizante cotizante) {
+        this.cotizante = cotizante;
     }
+
     public String getFecha() {
         return fecha;
     }
+
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
     @Override
     public String toString() {
-        return "persona=" + persona +
-                ", fecha='" + fecha;
+        return "CotizanteNegro{" +
+                "cotizante=" + cotizante +
+                ", fecha='" + fecha + '\'' +
+                '}';
     }
 }
