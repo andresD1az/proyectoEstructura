@@ -17,8 +17,9 @@ import java.util.List;
 
 public class AprovarCotizantes {
 
-    public boolean procesocotizante(Cotizante cotizante){
-        ArrayList<CotizanteNegro> listanegra=new ArrayList<>();
+    private static String rutanegra = csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/ListaNegra");
+
+    public static boolean procesocotizante(Cotizante cotizante){
         CotizanteNegro cotizanteNegro=buscarlolistaNegra(cotizante.getCedula());
         boolean centinela=true;
         if (cotizanteNegro != null){
@@ -27,6 +28,11 @@ public class AprovarCotizantes {
             }else {
                 centinela=false;
             }
+        }if (cotizanteNegro == null && cotizante.isEmbargado()){
+            String fechaActual = new SimpleDateFormat("yyyy_MM_dd").format(new Date());
+            cotizanteNegro =new CotizanteNegro(cotizante,fechaActual);
+            CsvCotizantesNegros.agregarObjeto(rutanegra,cotizanteNegro);
+            return false;
         }
         if (cotizante.isPrepencionado()){
             centinela=false;
@@ -36,7 +42,6 @@ public class AprovarCotizantes {
 
     public static boolean procesoCotizantePublico(Publico cotizante){
         boolean proceso=true;
-        String rutanegra = csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/ListaNegra");
         String rutaProceso = csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
             if(cotizante.getInstitucionPublica().equals("Armada")){
                 if (cotizante.isCondecoraciones()){
