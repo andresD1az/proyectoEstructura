@@ -17,13 +17,19 @@ import java.util.List;
 
 public class AprovarCotizantes {
 
+<<<<<<< HEAD
     private static String rutanegra = csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/ListaNegra");
 
     public static boolean procesocotizante(Cotizante cotizante){
         CotizanteNegro cotizanteNegro=buscarlolistaNegra(cotizante.getCedula());
+=======
+    public boolean procesocotizante(Cotizante cotizante){
+        ArrayList<CotizanteNegro> listanegra=new ArrayList<>();
+        String cotizanteNegro=buscarlolistaNegra(cotizante.getCedula());
+>>>>>>> origin/master
         boolean centinela=true;
         if (cotizanteNegro != null){
-            if (haPasadoMasDeSeisMeses(cotizanteNegro.getFecha())){
+            if (haPasadoMasDeSeisMeses(cotizanteNegro)){
                 centinela=true;
             }else {
                 centinela=false;
@@ -128,16 +134,23 @@ public class AprovarCotizantes {
         }
         return proceso;
     }
-    public static CotizanteNegro buscarlolistaNegra(int cedula){
-        ArrayList<CotizanteNegro> listanegra=new ArrayList<>();
-        CotizanteNegro persona=null;
-        for (CotizanteNegro cotizante:listanegra){
-//            if (cotizante.getCotizante().getCedula() == cedula){
-//                persona=cotizante;
-//            }
+
+    // Método para buscar la fecha en la lista negra con base en la cédula
+    public static String buscarlolistaNegra(int cedula) {
+        ArrayList<CotizanteNegro> listaNegra = new ArrayList<>(); // Supón que esta lista se inicializa con datos válidos.
+
+        // Recorrer la lista para buscar la cédula
+        for (CotizanteNegro cotizante : listaNegra) {
+            if (cotizante.getCotizante().getCedula() == cedula) {
+                // Retornar la fecha si se encuentra el cotizante
+                return cotizante.getFecha();
+            }
         }
-        return persona;
+
+        // Retornar null si no se encuentra el cotizante
+        return null;
     }
+
     public static boolean validacionHijos(String cargo, List<hijos> listahijos){
         boolean validacion=false;
         for (hijos hijo:listahijos){
@@ -152,7 +165,13 @@ public class AprovarCotizantes {
         }
         return validacion;
     }
+
+    // Método para validar si han pasado más de seis meses desde una fecha dada
     public static boolean haPasadoMasDeSeisMeses(String fechaStr) {
+        if (fechaStr == null || fechaStr.isEmpty()) {
+            throw new IllegalArgumentException("La fecha no puede ser nula o vacía");
+        }
+
         // Definir el formato de la fecha
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
 
