@@ -4,10 +4,15 @@ import org.example.Dominio.Cotizante;
 import org.example.Dominio.CotizanteNegro;
 import org.example.Dominio.Publico;
 import org.example.Dominio.hijos;
+import org.example.Util.csv.CsvCotizantesNegros;
+import org.example.Util.csv.csv;
+
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AprovarCotizantes {
@@ -31,6 +36,8 @@ public class AprovarCotizantes {
 
     public static boolean procesoCotizantePublico(Publico cotizante){
         boolean proceso=true;
+        String rutanegra = csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/ListaNegra");
+        String rutaProceso = csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
             if(cotizante.getInstitucionPublica().equals("Armada")){
                 if (cotizante.isCondecoraciones()){
                     return true;
@@ -60,7 +67,9 @@ public class AprovarCotizantes {
             }else if (cotizante.getInstitucionPublica().equals("MinSalud") ||
                     cotizante.getInstitucionPublica().equals("MinInterior")){
                 if (cotizante.isObservacionDisciplinaria()){
-                    //proceso de listado a la lista negra
+                    String fechaActual = new SimpleDateFormat("yyyy_MM_dd").format(new Date());
+                    CotizanteNegro cotizanteNegro =new CotizanteNegro(cotizante,fechaActual);
+                    CsvCotizantesNegros.agregarObjeto(rutanegra,cotizanteNegro);
                 }else{
                     return true;
                 }
@@ -140,7 +149,7 @@ public class AprovarCotizantes {
     }
     public static boolean haPasadoMasDeSeisMeses(String fechaStr) {
         // Definir el formato de la fecha
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy_MM_dd");
 
         // Convertir la fecha en String a LocalDate
         LocalDate fecha = LocalDate.parse(fechaStr, formatter);
