@@ -58,7 +58,9 @@ public class Main {
 //                csv.eliminarPrimeraLinea(rutainicio);
 //            }
 //        }
-        procesoAprovacion();
+       for (int i=0; i<2; i++) {
+           procesoAprovacion();
+       }
     }
     public static void procesoAprovacion(){
         String rutaEnProceso= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
@@ -76,6 +78,7 @@ public class Main {
                     mensaje = "Se Aprobo el traslado del cotizante publico:";
                 }
                 else {
+                    csv.eliminarPrimeraLinea(rutaEnProceso);
                     mensaje = "No se aprobo el traslado del cotizante publico:";
                 }
             }else{
@@ -83,6 +86,7 @@ public class Main {
                     csv.agregarObjeto(rutaAprobado,cotizante);
                     mensaje = "Se Aprobo el traslado del cotizante:";
                 }else {
+                    csv.eliminarPrimeraLinea(rutaEnProceso);
                     mensaje = "No se aprobo el traslado del cotizante publico:";
                 }
             }

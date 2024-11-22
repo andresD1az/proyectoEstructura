@@ -21,8 +21,6 @@ public class CsvCotizantesNegros {
                         cotizante = crearCotizante(datos);
                     }
                     cotizantesNegros.add(cotizante);
-                } else {
-                    System.err.println("Línea con formato incorrecto: " + linea);
                 }
             }
         } catch (IOException e) {
