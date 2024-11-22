@@ -21,16 +21,24 @@ public class Main {
 //
 //        // Restar un día para obtener la fecha del día anterior
 //        LocalDate fechaDiaAnterior = fechaActual.minusDays(1);
-//
+////
 //        // Formatear la fecha (opcional)
 //        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy_MM_dd");
 //        String fechaFormateada = fechaDiaAnterior.format(formato);
-//
+////
 //        System.out.println("La fecha del día anterior es: " + fechaFormateada);
 //        Carpetas carpetas = new Carpetas();
+//        String nombre="SolicitudesProcesadas_";
+//        String fecha= new SimpleDateFormat("yyyy_MM_dd").format(new Date());
+//        String nombreArchivo = nombre+ fecha;
 //        if (carpetas.comprimirCarpeta()){
-//            System.out.println("El carpeta se ha comprimido");
-//            carpetas.crearCarpeta();
+//            if (carpetas.eliminarCarpeta()){
+//                String carpeta = carpetas.crearCarpeta();
+//                csv.crearArchivoCSVVacioEnCarpeta(carpeta,nombreArchivo);
+//            }
+//        }else{
+//            String carpeta = carpetas.crearCarpeta();
+//            csv.crearArchivoCSVVacioEnCarpeta(carpeta,nombreArchivo);
 //        }
         //String ruta = csv.obtenerYEliminarArchivoVacio("src/main/java/org/example/archivos/SolicitudesEntrantes");
         //Persona p = csv.leerUnObjeto(ruta);
@@ -53,20 +61,32 @@ public class Main {
         procesoAprovacion();
     }
     public static void procesoAprovacion(){
-        String rutainicio= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
+        String rutaEnProceso= csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/SolicitudesEnProceso");
         String ubicacion = "src/main/java/org/example/archivos/";
         String nombre="SolicitudesProcesadas_";
         String fechaActual = new SimpleDateFormat("yyyy_MM_dd").format(new Date());
         String nombreCarpeta = nombre+ fechaActual;
-        String rutafinal = csv.obtenerArchivoConDatos(""+ubicacion+nombreCarpeta);
-        Persona cotizante= csv.leerUnObjeto(rutainicio);
+        String rutaAprobado = csv.obtenerArchivoConDatos(ubicacion+nombreCarpeta);
+        Persona cotizante= csv.leerUnObjeto(rutaEnProceso);
+        String mensaje="";
         if (AprovarCotizantes.procesocotizante((Cotizante) cotizante)){
             if (cotizante.isFuncionarioPublico()){
                 if (AprovarCotizantes.procesoCotizantePublico((Publico) cotizante)){
+                    csv.agregarObjeto(rutaAprobado,cotizante);
+                    mensaje = "Se Aprobo el traslado del cotizante publico:";
+                }
+                else {
+                    mensaje = "Se Aprobo el traslado del cotizante publico:";
+                }
+            }else{
+                if (AprovarCotizantes.procesocotizante((Cotizante) cotizante)){
 
                 }
             }
+        }else {
+            csv.eliminarPrimeraLinea(rutaEnProceso);
+            mensaje ="no pas";
         }
-
+        System.out.println(mensaje +": " +cotizante.toString());
     }
 }

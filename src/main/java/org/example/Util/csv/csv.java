@@ -200,7 +200,7 @@ public class csv {
                 }
             }
         } else {
-            System.out.println("La ruta proporcionada no es una carpeta.");
+            System.out.println("La ruta proporcionada no es una carpeta." + rutaCarpeta);
         }
         return null;  // Si no se encuentra ningún archivo con datos
     }

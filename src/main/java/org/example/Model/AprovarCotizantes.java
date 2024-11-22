@@ -4,24 +4,38 @@ import org.example.Dominio.Cotizante;
 import org.example.Dominio.CotizanteNegro;
 import org.example.Dominio.Publico;
 import org.example.Dominio.hijos;
+import org.example.Util.csv.CsvCotizantesNegros;
+import org.example.Util.csv.csv;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AprovarCotizantes {
 
+    private static String rutanegra = csv.obtenerArchivoConDatos("src/main/java/org/example/archivos/ListaNegra");
+
     public static boolean procesocotizante(Cotizante cotizante){
         ArrayList<CotizanteNegro> listanegra=new ArrayList<>();
-        String cotizanteNegro=buscarlolistaNegra(cotizante.getCedula());
+        String fecha=buscarlolistaNegra(cotizante.getCedula(),rutanegra);
         boolean centinela=true;
-        if (cotizanteNegro != null){
-            if (haPasadoMasDeSeisMeses(cotizanteNegro)){
+        if (fecha != null){
+            if (haPasadoMasDeSeisMeses(fecha)){
                 centinela=true;
             }else {
                 centinela=false;
             }
+        }
+        if (fecha == null && cotizante.isEmbargado()){
+            String fechaActual = new SimpleDateFormat("yyyy_MM_dd").format(new Date());
+            CotizanteNegro cotizanteNegro =new CotizanteNegro(cotizante,fechaActual);
+            CsvCotizantesNegros.agregarObjeto(rutanegra,cotizanteNegro);
         }
         if (cotizante.isPrepencionado()){
             centinela=false;
@@ -60,7 +74,9 @@ public class AprovarCotizantes {
         }else if (cotizante.getInstitucionPublica().equals("MinSalud") ||
                 cotizante.getInstitucionPublica().equals("MinInterior")){
             if (cotizante.isCondecoraciones()){
-                //proceso de listado a la lista negra
+                String fechaActual = new SimpleDateFormat("yyyy_MM_dd").format(new Date());
+                CotizanteNegro cotizanteNegro =new CotizanteNegro(cotizante,fechaActual);
+                CsvCotizantesNegros.agregarObjeto(rutanegra,cotizanteNegro);
             }else{
                 return true;
             }
@@ -115,19 +131,13 @@ public class AprovarCotizantes {
         return proceso;
     }
 
-    // Método para buscar la fecha en la lista negra con base en la cédula
-    public static String buscarlolistaNegra(int cedula) {
-        ArrayList<CotizanteNegro> listaNegra = new ArrayList<>(); // Supón que esta lista se inicializa con datos válidos.
-
-        // Recorrer la lista para buscar la cédula
-        for (CotizanteNegro cotizante : listaNegra) {
-            if (cotizante.getCotizante().getCedula() == cedula) {
-                // Retornar la fecha si se encuentra el cotizante
-                return cotizante.getFecha();
+    public static String buscarlolistaNegra(int cedula, String rutaArchivo) {
+        List<CotizanteNegro> cotizanteNegroList = CsvCotizantesNegros.leerObjetos(rutanegra);
+        for (CotizanteNegro cotizanteNegro: cotizanteNegroList){
+            if (cotizanteNegro.getCotizante().getCedula() == cedula){
+                return cotizanteNegro.getFecha();
             }
         }
-
-        // Retornar null si no se encuentra el cotizante
         return null;
     }
 
