@@ -14,15 +14,13 @@ public class CsvCotizantesNegros {
             while ((linea = br.readLine()) != null) {
                 String[] datos = linea.split(";");
                 if (datos.length > 8) { // Verificar que haya suficientes datos
-                    String fecha = datos[8]; // La fecha está en la columna 8
-                    Cotizante cotizante;
+                    CotizanteNegro cotizante;
                     if (datos[7].equalsIgnoreCase("true")) { // Es un funcionario público
                         cotizante = crearPublico(datos);
                     } else { // Es un cotizante
                         cotizante = crearCotizante(datos);
                     }
-                    CotizanteNegro cotizanteNegro = new CotizanteNegro(cotizante, fecha);
-                    cotizantesNegros.add(cotizanteNegro);
+                    cotizantesNegros.add(cotizante);
                 } else {
                     System.err.println("Línea con formato incorrecto: " + linea);
                 }
@@ -34,7 +32,7 @@ public class CsvCotizantesNegros {
     }
 
     // Método para construir un Cotizante
-    private static Cotizante crearCotizante(String[] datos) {
+    private static CotizanteNegro crearCotizante(String[] datos) {
         Cotizante cotizante = new Cotizante();
         cotizante.setTipoDocumento(datos[0]);
         cotizante.setCedula(Integer.parseInt(datos[1]));
@@ -43,16 +41,19 @@ public class CsvCotizantesNegros {
         cotizante.setUbicacionNacimiento(datos[4]);
         cotizante.setUbicacionResidencia(datos[5]);
         cotizante.setEdad(Integer.parseInt(datos[6]));
-        cotizante.setFuncionarioPublico(false); // No es un funcionario público
-        cotizante.setEmbargado(Boolean.parseBoolean(datos[9]));
-        cotizante.setPrepencionado(Boolean.parseBoolean(datos[10]));
-        cotizante.setEmpresaPensiones(datos[11]);
-        cotizante.setSemanasCotizadas(Double.parseDouble(datos[12]));
-        return cotizante;
+        cotizante.setFuncionarioPublico(Boolean.parseBoolean(datos[7]));
+        cotizante.setTrabajo(datos[8]);
+        cotizante.setNumeroHijos(Integer.parseInt(datos[9]));
+        cotizante.setEmbargado(Boolean.parseBoolean(datos[10]));
+        cotizante.setPrepencionado(Boolean.parseBoolean(datos[11]));
+        cotizante.setEmpresaPensiones(datos[12]);
+        cotizante.setSemanasCotizadas(Double.parseDouble(datos[13]));
+        String fecha = datos[14];
+        return new CotizanteNegro(cotizante,fecha);
     }
 
     // Método para construir un Publico
-    private static Publico crearPublico(String[] datos) {
+    private static CotizanteNegro crearPublico(String[] datos) {
         Publico publico = new Publico();
         publico.setTipoDocumento(datos[0]);
         publico.setCedula(Integer.parseInt(datos[1]));
@@ -61,18 +62,25 @@ public class CsvCotizantesNegros {
         publico.setUbicacionNacimiento(datos[4]);
         publico.setUbicacionResidencia(datos[5]);
         publico.setEdad(Integer.parseInt(datos[6]));
-        publico.setFuncionarioPublico(true); // Es un funcionario público
-        publico.setCondecoraciones(Boolean.parseBoolean(datos[9]));
-        publico.setInstitucionPublica(datos[10]);
-        List<hijos> listaHijos = new ArrayList<>();
-        if (!datos[11].isEmpty()) {
-            for (String hijoCsv : datos[11].split("\\|")) {
-                listaHijos.add(hijos.fromCsv(hijoCsv));
+        publico.setFuncionarioPublico(Boolean.parseBoolean(datos[7]));
+        publico.setTrabajo(datos[8]);
+        publico.setNumeroHijos(Integer.parseInt(datos[9]));
+        publico.setEmbargado(Boolean.parseBoolean(datos[10]));
+        publico.setPrepencionado(Boolean.parseBoolean(datos[11]));
+        publico.setEmpresaPensiones(datos[12]);
+        publico.setSemanasCotizadas(Double.parseDouble(datos[13]));
+        publico.setCondecoraciones(Boolean.parseBoolean(datos[14]));
+        publico.setInstitucionPublica(datos[15]);
+        publico.setObservacionDisciplinaria(Boolean.parseBoolean(datos[17]));
+        // Parsar lista de hijos
+        if (datos.length > 16 && !datos[16].isEmpty()) {
+            String[] hijosArray = datos[16].split("#");
+            for (String hijoCsv : hijosArray) {
+                publico.getListaHijos().add(hijos.fromCsv(hijoCsv));
             }
         }
-        publico.setListaHijos(listaHijos);
-        publico.setObservacionDisciplinaria(Boolean.parseBoolean(datos[12]));
-        return publico;
+        String fecha = datos[18]; // La fecha está en la columna 8
+        return new CotizanteNegro(publico,fecha);
     }
 
 
