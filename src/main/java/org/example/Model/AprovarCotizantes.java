@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AprovarCotizantes {
 
-    public boolean procesocotizante(Cotizante cotizante){
+    public static boolean procesocotizante(Cotizante cotizante){
         ArrayList<CotizanteNegro> listanegra=new ArrayList<>();
         String cotizanteNegro=buscarlolistaNegra(cotizante.getCedula());
         boolean centinela=true;
