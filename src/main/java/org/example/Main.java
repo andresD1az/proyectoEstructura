@@ -25,7 +25,6 @@ public class Main {
 //        // Formatear la fecha (opcional)
 //        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy_MM_dd");
 //        String fechaFormateada = fechaDiaAnterior.format(formato);
-////
 //        System.out.println("La fecha del día anterior es: " + fechaFormateada);
 //        Carpetas carpetas = new Carpetas();
 //        String nombre="SolicitudesProcesadas_";
@@ -40,6 +39,7 @@ public class Main {
 //            String carpeta = carpetas.crearCarpeta();
 //            csv.crearArchivoCSVVacioEnCarpeta(carpeta,nombreArchivo);
 //        }
+
         //String ruta = csv.obtenerYEliminarArchivoVacio("src/main/java/org/example/archivos/SolicitudesEntrantes");
         //Persona p = csv.leerUnObjeto(ruta);
 //        System.out.println(p.toString());
@@ -76,16 +76,19 @@ public class Main {
                     mensaje = "Se Aprobo el traslado del cotizante publico:";
                 }
                 else {
-                    mensaje = "Se Aprobo el traslado del cotizante publico:";
+                    mensaje = "No se aprobo el traslado del cotizante publico:";
                 }
             }else{
                 if (AprovarCotizantes.procesocotizante((Cotizante) cotizante)){
-
+                    csv.agregarObjeto(rutaAprobado,cotizante);
+                    mensaje = "Se Aprobo el traslado del cotizante:";
+                }else {
+                    mensaje = "No se aprobo el traslado del cotizante publico:";
                 }
             }
         }else {
             csv.eliminarPrimeraLinea(rutaEnProceso);
-            mensaje ="no pas";
+            mensaje = "No se aprobo el traslado del cotizante publico:";
         }
         System.out.println(mensaje +": " +cotizante.toString());
     }
